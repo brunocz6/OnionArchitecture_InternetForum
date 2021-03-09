@@ -1,0 +1,17 @@
+D:\Projects\InternetForum\InternetForum.Infrastructure\obj\Debug\net5.0\InternetForum.Infrastructure.csprojAssemblyReference.cache
+D:\Projects\InternetForum\InternetForum.Infrastructure\obj\Debug\net5.0\InternetForum.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\InternetForum\InternetForum.Infrastructure\obj\Debug\net5.0\InternetForum.Infrastructure.AssemblyInfoInputs.cache
+D:\Projects\InternetForum\InternetForum.Infrastructure\obj\Debug\net5.0\InternetForum.Infrastructure.AssemblyInfo.cs
+D:\Projects\InternetForum\InternetForum.Infrastructure\obj\Debug\net5.0\InternetForum.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Projects\InternetForum\InternetForum.Infrastructure\bin\Debug\net5.0\InternetForum.Infrastructure.deps.json
+D:\Projects\InternetForum\InternetForum.Infrastructure\bin\Debug\net5.0\InternetForum.Infrastructure.dll
+D:\Projects\InternetForum\InternetForum.Infrastructure\bin\Debug\net5.0\ref\InternetForum.Infrastructure.dll
+D:\Projects\InternetForum\InternetForum.Infrastructure\bin\Debug\net5.0\InternetForum.Infrastructure.pdb
+D:\Projects\InternetForum\InternetForum.Infrastructure\bin\Debug\net5.0\InternetForum.Application.dll
+D:\Projects\InternetForum\InternetForum.Infrastructure\bin\Debug\net5.0\InternetForum.Domain.dll
+D:\Projects\InternetForum\InternetForum.Infrastructure\bin\Debug\net5.0\InternetForum.Application.pdb
+D:\Projects\InternetForum\InternetForum.Infrastructure\bin\Debug\net5.0\InternetForum.Domain.pdb
+D:\Projects\InternetForum\InternetForum.Infrastructure\obj\Debug\net5.0\InternetForum.Infrastructure.csproj.CopyComplete
+D:\Projects\InternetForum\InternetForum.Infrastructure\obj\Debug\net5.0\InternetForum.Infrastructure.dll
+D:\Projects\InternetForum\InternetForum.Infrastructure\obj\Debug\net5.0\ref\InternetForum.Infrastructure.dll
+D:\Projects\InternetForum\InternetForum.Infrastructure\obj\Debug\net5.0\InternetForum.Infrastructure.pdb

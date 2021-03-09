@@ -1,0 +1,12 @@
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\obj\Debug\net5.0\Chattoo.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\obj\Debug\net5.0\Chattoo.Domain.AssemblyInfoInputs.cache
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\obj\Debug\net5.0\Chattoo.Domain.AssemblyInfo.cs
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\obj\Debug\net5.0\Chattoo.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\bin\Debug\net5.0\Chattoo.Domain.deps.json
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\bin\Debug\net5.0\Chattoo.Domain.dll
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\bin\Debug\net5.0\ref\Chattoo.Domain.dll
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\bin\Debug\net5.0\Chattoo.Domain.pdb
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\obj\Debug\net5.0\Chattoo.Domain.dll
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\obj\Debug\net5.0\ref\Chattoo.Domain.dll
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\obj\Debug\net5.0\Chattoo.Domain.pdb
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Domain\obj\Debug\net5.0\Chattoo.Domain.csprojAssemblyReference.cache

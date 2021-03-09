@@ -1,0 +1,17 @@
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\obj\Debug\net5.0\Chattoo.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\obj\Debug\net5.0\Chattoo.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\obj\Debug\net5.0\Chattoo.Infrastructure.AssemblyInfo.cs
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\obj\Debug\net5.0\Chattoo.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\obj\Debug\net5.0\Chattoo.Infrastructure.csprojAssemblyReference.cache
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\bin\Debug\net5.0\Chattoo.Infrastructure.deps.json
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\bin\Debug\net5.0\Chattoo.Infrastructure.dll
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\bin\Debug\net5.0\ref\Chattoo.Infrastructure.dll
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\bin\Debug\net5.0\Chattoo.Infrastructure.pdb
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\bin\Debug\net5.0\Chattoo.Application.dll
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\bin\Debug\net5.0\Chattoo.Domain.dll
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\bin\Debug\net5.0\Chattoo.Application.pdb
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\bin\Debug\net5.0\Chattoo.Domain.pdb
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\obj\Debug\net5.0\Chattoo.Infrastructure.csproj.CopyComplete
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\obj\Debug\net5.0\Chattoo.Infrastructure.dll
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\obj\Debug\net5.0\ref\Chattoo.Infrastructure.dll
+C:\Users\Bruno Pfohl\OneDrive\Desktop\chattoo\Chattoo.Infrastructure\obj\Debug\net5.0\Chattoo.Infrastructure.pdb
