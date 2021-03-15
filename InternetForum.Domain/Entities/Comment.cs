@@ -7,6 +7,11 @@ namespace InternetForum.Domain.Entities
     /// </summary>
     public class Comment : AuditableEntity<int>
 	{
+		public Comment()
+		{
+			
+		}
+		
 		/// <summary>
 		/// Vrací nebo nastavuje text komentáře.
 		/// </summary>

@@ -22,11 +22,13 @@ namespace InternetForum.Application.Posts.Queries.GetPost
     {
         private readonly IMapper _mapper;
         private readonly IPostRepository _postRepository;
+        private readonly IIdentityService _identityService;
 
-        public GetPostQueryHandler(IPostRepository postRepository, IMapper mapper)
+        public GetPostQueryHandler(IPostRepository postRepository, IMapper mapper, IIdentityService identityService)
         {
             _postRepository = postRepository;
             _mapper = mapper;
+            _identityService = identityService;
         }
 
         public async Task<PostDto> Handle(GetPostQuery request, CancellationToken cancellationToken)
@@ -39,7 +41,14 @@ namespace InternetForum.Application.Posts.Queries.GetPost
             {
                 throw new NotFoundException(nameof(Post), request.Id);
             }
-
+            
+            post.AuthorName = await _identityService.GetUserNameAsync(post.AuthorId);
+            
+            foreach (var comment in post.Comments)
+            {
+                comment.AuthorName = await _identityService.GetUserNameAsync(comment.AuthorId);
+            }
+            
             return post;
         }
     }

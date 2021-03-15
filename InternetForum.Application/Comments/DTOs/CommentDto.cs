@@ -1,8 +1,6 @@
 ﻿using System;
+using AutoMapper;
 using InternetForum.Application.Common.Mappings;
-using InternetForum.Application.Posts;
-using InternetForum.Application.Posts.DTOs;
-using InternetForum.Application.Users.DTOs;
 using InternetForum.Domain.Entities;
 using InternetForum.Domain.Interfaces;
 
@@ -31,18 +29,13 @@ namespace InternetForum.Application.Comments.DTOs
 		public string AuthorId { get; set; }
 		
 		/// <summary>
-		/// Vrací nebo nastavuje autora.
+		/// Vrací nebo nastavuje jméno autora.
 		/// </summary>
-		public UserDto Author { get; set; }
+		public string AuthorName { get; set; }
 
 		/// <summary>
 		/// Vrací nebo nastavuje Id příspěvku.
 		/// </summary>
 		public int PostId { get; set; }
-		
-		/// <summary>
-		/// Vrací nebo nastavuje příspěvek, pod který komentář patří.
-		/// </summary>
-		public PostDto Post { get; set; }
     }
 }

@@ -24,8 +24,9 @@ namespace InternetForum.Infrastructure
             }
             else
             {
-                services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(
+                services.AddDbContext<ApplicationDbContext>(options => options
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer(
                         configuration.GetConnectionString("DefaultConnection"),
                         b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
             }

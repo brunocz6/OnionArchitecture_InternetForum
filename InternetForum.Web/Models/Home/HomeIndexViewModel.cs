@@ -1,34 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using InternetForum.Application.Common.Models;
+using InternetForum.Application.ForumThreads.DTOs;
 using InternetForum.Web.Models.ForumThread;
+using InternetForum.Web.Models.Post;
 
-namespace InternetForum.Models
+namespace InternetForum.Web.Models.Home
 {
 	public class HomeIndexViewModel
 	{
 		/// <summary>
-		/// Vrací prázdnou instanci <see cref="HomeIndexViewModel"/> modelu.
-		/// </summary>
-		public HomeIndexViewModel()
-		{
-
-		}
-
-		/// <summary>
-		/// Vrací instanci <see cref="HomeIndexViewModel"/> modelu s předvyplněnými hodnotami.
-		/// </summary>
-		/// <param name="posts">Kolekce příspěvků</param>
-		/// <param name="forumThreads">Kolekce dostupných vláken příspěvků</param>
-		/// <param name="forumThread">Objekt s informacemi o aktuálně zvoleném vláknu příspěvků</param>
-		public HomeIndexViewModel(PagingList<PostPreviewViewModel> posts, IEnumerable<ForumThreadViewModel> forumThreads)
-		{
-			this.Posts = posts;
-			this.ForumThreads = forumThreads;
-		}
-
-		/// <summary>
 		/// Vrací nebo nastavuje název vlákna příspěvků.
 		/// </summary>
-		public ForumThreadInfoPanelViewModel CurrentForumThread { get; set; }
+		public ForumThreadViewModel CurrentForumThread { get; set; }
 
 		/// <summary>
 		/// Vrací nebo nastavuje kolekci základních informací o vláknech příspěvků.
@@ -38,6 +22,18 @@ namespace InternetForum.Models
 		/// <summary>
 		/// Vrací nebo nastavuje kolekci příspěvků.
 		/// </summary>
-		public PagingList<PostPreviewViewModel> Posts { get; set; }
+		public IEnumerable<PostViewModel> Posts { get; set; }
+
+		public static HomeIndexViewModel Create(ForumThreadDto currentForumThread, IEnumerable<ForumThreadDto> forumThreads)
+		{
+			var model = new HomeIndexViewModel()
+			{
+				CurrentForumThread = ForumThreadViewModel.FromDto(currentForumThread),
+				ForumThreads = forumThreads.Select(ForumThreadViewModel.FromDto),
+				Posts = currentForumThread.Posts.Select(PostViewModel.FromDto)
+			};
+
+			return model;
+		}
 	}
 }

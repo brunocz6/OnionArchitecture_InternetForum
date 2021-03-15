@@ -8,6 +8,8 @@ namespace InternetForum.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Post> builder)
         {
+            builder.ToTable("Posts");
+            
             builder.Property(e => e.Title)
                 .HasMaxLength(255)
                 .IsRequired();

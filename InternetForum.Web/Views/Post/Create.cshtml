@@ -1,0 +1,33 @@
+﻿@model InternetForum.Web.Models.Post.PostEditorViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+<h2> Publikovat nový příspěvek </h2>
+
+
+<form asp-action="Create" asp-controller="Post" class="c-form">
+
+    <div class="form-group">
+        <label asp-for="ForumThreadId"></label>
+        @* 
+			Výběrové pole pro vybrání položku z kolekce
+			(každá položka výběrového pole je typu SelectListItem) 
+		*@
+        <select asp-for="ForumThreadId" asp-items="Model.ForumThreads" id="forumThreadSelect" class="form-control">
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input type="text" asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Body"></label>
+        <textarea asp-for="Body" class="form-control"></textarea>
+        <span asp-validation-for="Body" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Publikovat</button>
+</form>

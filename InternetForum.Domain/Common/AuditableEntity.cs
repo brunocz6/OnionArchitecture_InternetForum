@@ -1,11 +1,12 @@
 ﻿using System;
+using InternetForum.Domain.Interfaces;
 
 namespace InternetForum.Domain.Common
 {
     /// <summary>
     /// Entita o které víme, kdy byla vytvořena případně naposledy upravena.
     /// </summary>
-    public class AuditableEntity<TKey> : Entity<TKey>
+    public class AuditableEntity<TKey> : Entity<TKey>, IAuditableEntity
     {
         public DateTime CreatedAt { get; set; }
 

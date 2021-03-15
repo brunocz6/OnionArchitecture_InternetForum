@@ -50,8 +50,8 @@ namespace InternetForum.Application.ForumThreads.Commands.EditForumThread
             entity.Name = request.Name;
             entity.Description = request.Description;
 
-            await _forumThreadRepository.AddOrUpdateAsync(entity);
-            var result = await _unitOfWork.SaveChangesAsync();
+            await _forumThreadRepository.AddOrUpdateAsync(entity, cancellationToken);
+            var result = await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return result;
         }

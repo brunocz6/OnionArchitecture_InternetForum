@@ -8,6 +8,11 @@ namespace InternetForum.Domain.Entities
     /// </summary>
     public class Post : AuditableEntity<int>
 	{
+		public Post()
+		{
+			this.Comments = new List<Comment>();
+		}
+		
 		/// <summary>
 		/// Vrací nebo nastavuje nadpis příspěvku.
 		/// </summary>
@@ -36,6 +41,6 @@ namespace InternetForum.Domain.Entities
 		/// <summary>
 		/// Vrací nebo nastavuje kolekci komentářů tohoto příspěvku.
 		/// </summary>
-		public virtual ICollection<Comment> Comments { get; set; }
+		public virtual IList<Comment> Comments { get; set; }
 	}
 }

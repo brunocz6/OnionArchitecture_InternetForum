@@ -163,7 +163,7 @@ namespace InternetForum.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("InternetForum.Domain.Entities.ForumThread", b =>
@@ -203,7 +203,7 @@ namespace InternetForum.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ForumThread");
+                    b.ToTable("ForumThreads");
                 });
 
             modelBuilder.Entity("InternetForum.Domain.Entities.ForumThreadUser", b =>
@@ -242,7 +242,7 @@ namespace InternetForum.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ForumThreadId");
 
-                    b.ToTable("ForumThreadUser");
+                    b.ToTable("ForumThreadUsers");
                 });
 
             modelBuilder.Entity("InternetForum.Domain.Entities.Post", b =>
@@ -290,7 +290,7 @@ namespace InternetForum.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ForumThreadId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("InternetForum.Infrastructure.Identity.ApplicationUser", b =>

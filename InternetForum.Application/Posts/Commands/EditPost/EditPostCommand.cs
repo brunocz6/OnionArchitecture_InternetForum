@@ -35,11 +35,13 @@ namespace InternetForum.Application.Posts.Commands.EditPost
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPostRepository _postRepository;
+        private readonly IForumThreadRepository _forumThreadRepository;
 
-        public EditPostCommandHandler(IUnitOfWork unitOfWork, IPostRepository postRepository)
+        public EditPostCommandHandler(IUnitOfWork unitOfWork, IPostRepository postRepository, IForumThreadRepository forumThreadRepository)
         {
             _unitOfWork = unitOfWork;
             _postRepository = postRepository;
+            _forumThreadRepository = forumThreadRepository;
         }
 
         public async Task<int> Handle(EditPostCommand request, CancellationToken cancellationToken)
@@ -54,7 +56,7 @@ namespace InternetForum.Application.Posts.Commands.EditPost
             }
             
             // Načtu nově zvolené vlákno příspěvku.
-            var forumThread = await _postRepository.GetByIdAsync(request.ForumThreadId);
+            var forumThread = await _forumThreadRepository.GetByIdAsync(request.ForumThreadId);
 
             // Pokud se mi nepodařilo nalézt vlákno, vyhodím výjimku.
             if (forumThread is null)

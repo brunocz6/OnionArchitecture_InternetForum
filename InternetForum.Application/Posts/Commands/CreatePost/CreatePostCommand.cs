@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using InternetForum.Application.Common.Exceptions;
+using InternetForum.Application.Common.Interfaces;
 using InternetForum.Application.Common.Security;
 using InternetForum.Domain.Entities;
 using InternetForum.Domain.Repositories;
@@ -31,16 +32,20 @@ namespace InternetForum.Application.Posts.Commands.CreatePost
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPostRepository _postRepository;
+        private readonly IForumThreadRepository _forumThreadRepository;
+        private readonly ICurrentUserService _currentUserService;
 
-        public CreatePostCommandHandler(IUnitOfWork unitOfWork, IPostRepository postRepository)
+        public CreatePostCommandHandler(IUnitOfWork unitOfWork, IPostRepository postRepository, IForumThreadRepository forumThreadRepository, ICurrentUserService currentUserService)
         {
             _unitOfWork = unitOfWork;
             _postRepository = postRepository;
+            _forumThreadRepository = forumThreadRepository;
+            _currentUserService = currentUserService;
         }
 
         public async Task<int> Handle(CreatePostCommand request, CancellationToken cancellationToken)
         {
-            var forumThread = await _postRepository.GetByIdAsync(request.ForumThreadId);
+            var forumThread = await _forumThreadRepository.GetByIdAsync(request.ForumThreadId);
 
             if (forumThread is null)
             {
@@ -50,6 +55,7 @@ namespace InternetForum.Application.Posts.Commands.CreatePost
             var entity = new Post()
             {
                 ForumThreadId = request.ForumThreadId,
+                AuthorId = _currentUserService.UserId,
                 Title = request.Title,
                 Body = request.Body
             };

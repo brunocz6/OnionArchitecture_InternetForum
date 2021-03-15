@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using InternetForum.Application.Comments.DTOs;
 using InternetForum.Application.Common.Mappings;
-using InternetForum.Application.ForumThreads.DTOs;
-using InternetForum.Application.Users.DTOs;
 using InternetForum.Domain.Entities;
 using InternetForum.Domain.Interfaces;
 
@@ -24,6 +24,11 @@ namespace InternetForum.Application.Posts.DTOs
 		/// Vrací nebo nastavuje obsah příspěvku.
 		/// </summary>
 		public string Body { get; set; }
+		
+		/// <summary>
+		/// Vrací nebo nastavuje, kdy byl příspěvek přidán.
+		/// </summary>
+		public DateTime CreatedAt { get; set; }
 
 		/// <summary>
 		/// Vrací nebo nastavuje Id vlákna, kterého je příspěvek součástí.
@@ -31,9 +36,9 @@ namespace InternetForum.Application.Posts.DTOs
 		public int ForumThreadId { get; set; }
 		
 		/// <summary>
-		/// Vrací nebo nastavuje, kterého vlákna je příspěvek součástí.
+		/// Vrací nebo nastavuje název vlákna, kterého je příspěvek součástí.
 		/// </summary>
-		public virtual ForumThreadDto ForumThread { get; set; }
+		public string ForumThreadName { get; set; }
 
 		/// <summary>
 		/// Vrací nebo nastavuje Id autora.
@@ -41,13 +46,19 @@ namespace InternetForum.Application.Posts.DTOs
 		public string AuthorId { get; set; }
 		
 		/// <summary>
-		/// Vrací nebo nastavuje autora.
+		/// Vrací nebo nastavuje jméno autora.
 		/// </summary>
-		public UserDto Author { get; set; }
+		public string AuthorName { get; set; }
 
 		/// <summary>
 		/// Vrací nebo nastavuje kolekci komentářů tohoto příspěvku.
 		/// </summary>
-		public virtual IEnumerable<CommentDto> Comments { get; set; }
+		public IEnumerable<CommentDto> Comments { get; set; }
+
+		public void Mapping(Profile profile)
+		{
+			profile.CreateMap<Post, PostDto>()
+				.ForMember(d => d.ForumThreadName, opt => opt.MapFrom(e => e.ForumThread.Name));
+		}
     }
 }

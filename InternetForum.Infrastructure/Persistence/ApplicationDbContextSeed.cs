@@ -23,7 +23,7 @@ namespace InternetForum.Infrastructure.Persistence
                 await roleManager.CreateAsync(administratorRole);
             }
 
-            var administrator = new ApplicationUser { UserName = "admin", Email = "administrator@localhost" };
+            var administrator = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost" };
 
             if (userManager.Users.All(u => u.UserName != administrator.UserName))
             {

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<InternetForum.Web.Models.ForumThread.ForumThreadViewModel>
+
+@{
+    ViewData["Title"] = "Správa vláken příspěvků";
+}
+<div class="row">
+    <div class="col-sm-10">
+        <h2> Vlákna příspěvků </h2>
+    </div>
+    <div class="col-sm-2">
+        <a asp-action="Create" asp-controller="ForumThread" class="btn btn-outline-secondary float-right">Přidat vlákno</a>
+    </div>
+</div>
+
+<div>
+    @foreach (var forumThread in Model)
+    {
+        <div class="card m-2">
+            <div class="card-header">
+                <div class="float-right">
+                    <a asp-action="Edit" asp-controller="ForumThread" asp-route-id="@forumThread.Id" class="btn btn-sm btn-outline-info pull-right">Upravit</a>
+                    <a href="#" class="btn btn-sm btn-outline-danger pull-right" onclick="deletePost(@forumThread.Id)">Smazat</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@forumThread.Name</h5>
+                <p class="card-text">@forumThread.Description</p>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+	var deletePost = (forumThreadId) => {
+		if (confirm("Opravdu si přejete toto vlákno smazat?")) {
+			$.post("/ForumThread/Delete",
+				{ id: forumThreadId },
+				(returnedData) => {
+					window.location.reload();
+				}
+			);
+		}
+	}
+</script>

@@ -1,9 +1,13 @@
-﻿using System.Threading.Tasks;
-using InternetForum.Application.Posts.Queries.GetUsersPostsWithPagination;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using InternetForum.Application.Posts.Commands.CreatePost;
+using InternetForum.Application.Posts.Commands.DeletePost;
+using InternetForum.Application.Posts.Commands.EditPost;
+using InternetForum.Application.Posts.Queries.GetPost;
+using InternetForum.Application.Posts.Queries.GetUsersPosts;
 using InternetForum.Web.Models.Post;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InternetForum.Web.Controllers
 {
@@ -13,20 +17,14 @@ namespace InternetForum.Web.Controllers
 		/// Akce pro zobrazení příspěvků přihlášeného uživatele.
 		/// </summary>
 		/// <param name="page">číslo stránky</param>
-		public async Task<IActionResult> MyPosts(int page = 1)
+		[Authorize]
+		public async Task<IActionResult> MyPosts()
 		{
-			var query = new GetUsersPostsWithPaginationQuery()
-			{
-				PageNumber = page
-			};
+			var query = new GetUsersPostsQuery();
 
 			var result = await Mediator.Send(query);
-			
-			var posts = this.unitOfWork.PostRepository
-				.GetUsersPosts(GetCurrentUserId())
-				.ToList();
 
-			var model = posts.Select(p => PostDetailsViewModel.CreateFromEntity(p));
+			var model = result.Select(PostViewModel.FromDto);
 
 			return View(model);
 		}
@@ -37,11 +35,9 @@ namespace InternetForum.Web.Controllers
 		[Authorize]
 		public async Task<IActionResult> Create()
 		{
-			// Načtu z databáze všechna dostupná vlákna příspěvků.
-			var forumThreads = this.unitOfWork.ForumThreadRepository.GetAll().ToList();
-
-			// Vytvořím model.
-			var model = new CreatePostViewModel(forumThreads);
+			var model = new PostEditorViewModel();
+			
+			await model.Fetch(Mediator);
 
 			return View(model);
 		}
@@ -51,35 +47,23 @@ namespace InternetForum.Web.Controllers
 		/// </summary>
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> Create(CreatePostViewModel model)
+		public async Task<IActionResult> Create(PostEditorViewModel model)
 		{
-			// Zkontroluji, jestli model prošel validací.
-			if (ModelState.IsValid)
+			var command = new CreatePostCommand()
 			{
-				// Vytvořím entitu příspěvku a naplním ji daty z modelu.
-				var post = model.CreateEntity(GetCurrentUser().Id);
+				ForumThreadId = model.ForumThreadId,
+				Title = model.Title,
+				Body = model.Body
+			};
 
-				// Přidám entitu do databáze.
-				this.unitOfWork.PostRepository.Add(post);
-
-				// Uložím změny v databázi.
-				this.unitOfWork.Save();
-
-				// Přesměruji uživatele na hlavní stránku.
+			var result = await Mediator.Send(command);
+			
+			if (result > 0)
+			{
 				return RedirectToAction("Index", "Home");
 			}
 
-			// Pokud model neprojde validací, objeví se uživateli formulář s chybovými hláškami.
-
-			// Vložím do modelu seznam dostupných vláken příspěvků.
-			model.ForumThreads = this.unitOfWork.ForumThreadRepository
-				.GetAll()
-				.ToList()
-				.Select(ft => new SelectListItem()
-				{
-					Text = ft.Name,
-					Value = ft.Id.ToString()
-				});
+			await model.Fetch(Mediator);
 
 			return View(model);
 		}
@@ -92,11 +76,19 @@ namespace InternetForum.Web.Controllers
 		[Authorize]
 		public async Task<IActionResult> Edit(int id)
 		{
-			// Načtu příspěvek z databáze.
-			var post = this.unitOfWork.PostRepository.GetById(id);
+			// Sestavím query pro získání příspěvku.
+			var queryGetPost = new GetPostQuery()
+			{
+				Id = id
+			};
 
+			// Pošlu dotaz na získání příspěvku.
+			var post = await Mediator.Send(queryGetPost);
+			
 			// Převedu entitu na model.
-			var model = EditPostViewModel.CreateFromEntity(post);
+			var model = PostEditorViewModel.FromDto(post);
+
+			await model.Fetch(Mediator);
 
 			return View(model);
 		}
@@ -105,28 +97,28 @@ namespace InternetForum.Web.Controllers
 		/// Akce pro upravení příspěvku (zpracování dat z formuláře).
 		/// </summary>
 		/// <param name="model"></param>
-		/// <returns></returns>
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> Edit(EditPostViewModel model)
+		public async Task<IActionResult> Edit(PostEditorViewModel model)
 		{
-			// Zkontroluji, jestli model prošel validací.
-			if (ModelState.IsValid)
+			var command = new EditPostCommand()
 			{
-				// Načtu entitu příspěvek s daným Id.
-				var post = this.unitOfWork.PostRepository.GetById(model.Id);
+				Id = model.Id,
+				ForumThreadId = model.ForumThreadId,
+				Title = model.Title,
+				Body = model.Body
+			};
 
-				// Pokud je aktuálně přihlášený uživatel autorem příspěvku, uložím změny.
-				if (post.AuthorId == GetCurrentUserId())
-				{
-					model.UpdateEntity(post);
-					this.unitOfWork.PostRepository.Update(post);
-				}
+			var result = await Mediator.Send(command);
 
+			if (result > 0)
+			{
 				// Přesměruji uživatele na hlavní stránku.
 				return RedirectToAction("Index", "Home");
 			}
 
+			await model.Fetch(Mediator);
+			
 			return View(model);
 		}
 
@@ -134,20 +126,16 @@ namespace InternetForum.Web.Controllers
 		/// Akce pro zobrazení detailu příspěvku.
 		/// </summary>
 		/// <param name="id">Id příspěvku</param>
-		/// <param name="page">číslo stránky komentářů</param>
-		public async Task<IActionResult> Detail(int id, int page = 1)
+		public async Task<IActionResult> Detail(int id)
 		{
-			// Načtu entitu příspěvku.
-			var post = this.unitOfWork.PostRepository.GetById(id);
+			var query = new GetPostQuery()
+			{
+				Id = id
+			};
 
-			// Pokud příspěvek s daným Id nebyl v databázi nalezen, vrátím ERROR 404.
-			if (post is null)
-				return NotFound();
+			var post = await Mediator.Send(query);
 
-			// Převedu entitu na model.
-			var model = PostViewModel.CreateFromEntity(post, page, 10);
-
-			model.Comments.Action = nameof(Detail);
+			var model = PostViewModel.FromDto(post);
 
 			return View(model);
 		}
@@ -156,25 +144,19 @@ namespace InternetForum.Web.Controllers
 		/// Akce pro smazání příspěvku.
 		/// </summary>
 		/// <param name="id">Id příspěvku určeného ke smazání</param>
-		/// <returns></returns>
-		[HttpPost]
 		[Authorize]
+		[HttpPost]
 		public async Task<IActionResult> Delete(int id)
 		{
-			// Načtu entitu příspěvku.
-			var post = this.unitOfWork.PostRepository.GetById(id);
-
-			// Pokud je aktuálně přihlášený uživatel autorem příspěvku a pokud byl záznam
-			// v databázi nalezen, smažu ho.
-			if (post != null && post.Author.Id == GetCurrentUserId())
+			// Sestavím příkaz pro smazání příspěvku.
+			var command = new DeletePostCommand()
 			{
-				// Odstraním příspěvek z databáže.
-				this.unitOfWork.PostRepository.Remove(post);
+				Id = id
+			};
 
-				// Uložím změny v databázi.
-				this.unitOfWork.Save();
-			}
-
+			// Pošlu příkaz pro smazání příspěvku.
+			var result = await Mediator.Send(command);
+			
 			// Přesměruji uživatele na seznam jeho příspěvků.
 			return RedirectToAction(nameof(MyPosts));
 		}

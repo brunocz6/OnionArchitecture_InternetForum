@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using InternetForum.Application.Common.Exceptions;
+using InternetForum.Application.Common.Interfaces;
 using InternetForum.Application.Common.Security;
 using InternetForum.Domain.Entities;
 using InternetForum.Domain.Repositories;
@@ -21,11 +22,13 @@ namespace InternetForum.Application.Comments.Commands.DeleteComment
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICommentRepository _commentRepository;
+        private readonly ICurrentUserService _currentUserService;
 
-        public DeleteCommentCommandHandler(IUnitOfWork unitOfWork, ICommentRepository commentRepository)
+        public DeleteCommentCommandHandler(IUnitOfWork unitOfWork, ICommentRepository commentRepository, ICurrentUserService currentUserService)
         {
             _unitOfWork = unitOfWork;
             _commentRepository = commentRepository;
+            _currentUserService = currentUserService;
         }
 
         public async Task<int> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
@@ -37,6 +40,12 @@ namespace InternetForum.Application.Comments.Commands.DeleteComment
             if (entity is null)
             {
                 throw new NotFoundException(nameof(Comment), request.Id);
+            }
+
+            // Pokud se uživatel pokouší smazat příspěvek, který mu nepatří, vyhodím výjimku.
+            if (entity.AuthorId != _currentUserService.UserId)
+            {
+                throw new ForbiddenAccessException();
             }
 
             // Uložím změny.

@@ -1,12 +1,10 @@
 using InternetForum.Application;
 using InternetForum.Application.Common.Interfaces;
 using InternetForum.Infrastructure;
-using InternetForum.Infrastructure.Identity;
-using InternetForum.Infrastructure.Persistence;
+using InternetForum.Web.Filters;
 using InternetForum.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,7 +32,10 @@ namespace InternetForum.Web
 
             services.AddHttpContextAccessor();
 
-            services.AddControllersWithViews();
+            services
+                .AddControllersWithViews(options => options.Filters.Add<ApiExceptionFilterAttribute>())
+                .AddRazorRuntimeCompilation();
+            
             services.AddRazorPages();
         }
 

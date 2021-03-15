@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using InternetForum.Application.Common.Models;
 using InternetForum.Application.ForumThreads.Commands.CreateForumThread;
 using InternetForum.Application.ForumThreads.Commands.DeleteForumThread;
 using InternetForum.Application.ForumThreads.Commands.EditForumThread;
 using InternetForum.Application.ForumThreads.Queries;
 using InternetForum.Web.Models.ForumThread;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InternetForum.Web.Controllers
@@ -12,6 +14,7 @@ namespace InternetForum.Web.Controllers
 	/// <summary>
 	/// Řadič s akcemi souvisejíci s vlákny příspěvků (k těmto akcím má přístup pouze uživatel s rolí 'Administrator').
 	/// </summary>
+	[Authorize(Roles = "Administrator")]
 	public class ForumThreadController : BaseController
 	{
 		/// <summary>
@@ -39,14 +42,9 @@ namespace InternetForum.Web.Controllers
 				Description = model.Description
 			};
 			
-			var result = await Mediator.Send(command);
+			await Mediator.Send(command);
 
-			if (result > 0)
-			{
-				return RedirectToAction("Index", "Home");
-			}
-
-			return View(model);
+			return new JsonResult(Result.Success());
 		}
 
 		/// <summary>
@@ -98,14 +96,9 @@ namespace InternetForum.Web.Controllers
 				Description = model.Description
 			};
 
-			var result = await Mediator.Send(command);
+			await Mediator.Send(command);
 
-			if (result > 0)
-			{
-				return RedirectToAction("List", "ForumThread");
-			}
-
-			return View(model);
+			return new JsonResult(Result.Success());
 		}
 
 		/// <summary>

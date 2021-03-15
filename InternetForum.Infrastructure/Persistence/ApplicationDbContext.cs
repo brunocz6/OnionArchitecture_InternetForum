@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using InternetForum.Domain.Entities;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace InternetForum.Infrastructure.Persistence
 {
@@ -48,8 +49,9 @@ namespace InternetForum.Infrastructure.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<AuditableEntity<object>> entry in ChangeTracker.Entries<AuditableEntity<object>>())
+            foreach (var entityEntry in ChangeTracker.Entries<IAuditableEntity>())
             {
+                var entry = (EntityEntry<IAuditableEntity>) entityEntry;
                 switch (entry.State)
                 {
                     case EntityState.Added:

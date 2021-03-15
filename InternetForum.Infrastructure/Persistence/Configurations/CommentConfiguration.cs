@@ -9,6 +9,8 @@ namespace InternetForum.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Comment> builder)
         {
+            builder.ToTable("Comments");
+            
             builder.Property(e => e.Body)
                 .HasMaxLength(200)
                 .IsRequired();

@@ -1,8 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model InternetForum.Web.Models.Home.HomeIndexViewModel
+
+@{
+    ViewData["Title"] = "Úvodní stránka";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-md-9 pull-left">
+        @* List příspevků na aktuální stránce *@
+        @foreach (var post in Model.Posts)
+        {
+            await Html.RenderPartialAsync("~/Views/Post/_PostPreviewPartial.cshtml", post);
+        }
+    </div>
+    <div class="col-md-3">
+
+        @* Panel s informaci o aktuálním vlákně *@
+        @{ await Html.RenderPartialAsync("~/Views/ForumThread/_ForumThreadInfoPanelPartial.cshtml", Model.CurrentForumThread); }
+
+        @* Seznam dostupných vláken příspěvků *@
+        <div class="card m-2">
+            <div class="card-header">
+                Vlákna příspěvků
+            </div>
+            <ul class="list-group list-group-flush">
+                @foreach (var thread in Model.ForumThreads)
+                {
+                    <li class="list-group-item">
+                        <a asp-action="Index" asp-controller="Home" asp-route-forumThreadId="@thread.Id">
+                            @thread.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
 </div>

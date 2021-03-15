@@ -8,6 +8,8 @@ namespace InternetForum.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ForumThreadUser> builder)
         {
+            builder.ToTable("ForumThreadUsers");
+            
             builder.Property(e => e.UserId)
                 .IsRequired();
         }

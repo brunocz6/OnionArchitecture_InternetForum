@@ -3,6 +3,7 @@ using InternetForum.Application.Posts;
 using InternetForum.Domain.Entities;
 using InternetForum.Domain.Interfaces;
 using System.Collections.Generic;
+using AutoMapper;
 using InternetForum.Application.Posts.DTOs;
 
 namespace InternetForum.Application.ForumThreads.DTOs
@@ -27,6 +28,6 @@ namespace InternetForum.Application.ForumThreads.DTOs
 		/// <summary>
 		/// Vrací nebo nastavuje příspěvky, které jsou součástí tohoto vlákna.
 		/// </summary>
-		public virtual IEnumerable<PostDto> Posts { get; set; }
+		public IEnumerable<PostDto> Posts { get; set; }
     }
 }

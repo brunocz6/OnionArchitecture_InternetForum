@@ -1,7 +1,7 @@
 ﻿using System;
 using InternetForum.Application.Comments.DTOs;
 
-namespace InternetForum.Web.Models
+namespace InternetForum.Web.Models.Comment
 {
 	public class CommentViewModel
 	{
@@ -35,7 +35,7 @@ namespace InternetForum.Web.Models
 			{
 				Id = comment.Id,
 				Body = comment.Body,
-				AuthorUserName = comment.Author.UserName,
+				AuthorUserName = comment.AuthorName,
 				CreatedAt = comment.CreatedAt
 			};
 

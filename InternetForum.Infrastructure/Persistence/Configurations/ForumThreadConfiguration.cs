@@ -8,6 +8,8 @@ namespace InternetForum.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ForumThread> builder)
         {
+            builder.ToTable("ForumThreads");
+            
             builder.Property(e => e.Name)
                 .HasMaxLength(100)
                 .IsRequired();
